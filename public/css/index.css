@@ -58,49 +58,7 @@ body{
     position:relative;
     display: block;
 }
-.close-first , .close-second{
- height: 2px;
- width: 35px;
- background-color: whitesmoke;
- display: block;
- margin: 4px;
- cursor: pointer;
- padding: 1px;
- border-radius: 20px;
-}
-.close-first {
-    transform: rotate(45deg);
-}
-.close-second{
-    transform: rotate(-45deg);
-}
-.navigation-close{
-    position: absolute;
-    top: 6%;
-    left:4%;
-    padding: 10px;
-    cursor: pointer;
-    transition: all.3s ease;
-    opacity: .8;
-}
-.navigation-close:hover{
-    opacity: 1;
-    transform: rotate(90deg);
-}
-.logo img{
-    height: 80px;
-    position: absolute;
-    top: 3%;
-    right: 5%;
-    opacity: .8;
-    z-index: 2;
-    cursor: pointer;
-    transition: all .4s ease;
-}
-.logo img:hover{
-    opacity: 1;
-    transform: rotate(-45deg);
-}
+
 .header-image img{
     height: 100vh;
     float: right;
@@ -180,9 +138,9 @@ body{
 .social-media-links{
     height: 100vh;
     position: absolute;
-    right: 25px;
+    right: 10px;
     z-index: 2;
-    padding: 60px;
+    padding: 10px;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -200,48 +158,6 @@ body{
 .social-media:hover{
     opacity: 1;
     transform: scale(1.1);
-}
-.navigation-links{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-family:poppins;
-}
-.navigation-links a{
-    padding:10px;
-    text-decoration: none;
-    color: white;
-    font-size: 30px;
-    opacity: .7;
-    transition: all .4s ease;
-}
-.navigation-links a:hover{
-    opacity: 1;
-}
-.navigation-links a::before{
-    content: "";
-    position: absolute;
-    top:50%;
-    left: 50%;
-    display: flex;
-    justify-content: center;
-    transform: translate(-50%,-50%);
-    align-items: center;
-    font-size: 5em;
-    font-weight: 400;
-    font-family: monoton;
-    color:rgb(255, 255, 255,.1);
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    letter-spacing: 100px;
-    transition: all .4s ease;
-}
-.navigation-links a:hover::before{
-    content: attr(data-text);
-    opacity: 1;
-    letter-spacing: 10px;
 }
 #contact{
     display: flex;
@@ -1382,15 +1298,6 @@ For devices with smaller width like mobile phone
                 height: 300px;
                 width: 90%;
             }
-            .navigation-bar img{
-                height: 80px;
-                position: absolute;
-                top: 15%;
-                left: 2.5%;
-                opacity: .8;
-                transition: all .4s ease;
-                display: none;
-            }
             .blogs{
                 height: auto;
                 width: 90%;
@@ -1853,14 +1760,6 @@ for tabs and large phones
             .portfolio-image{
                 height: 380px;
                 width: 70%;
-            }
-            .navigation-bar img{
-                height: 80px;
-                position: absolute;
-                top: 15%;
-                left: 2.5%;
-                opacity: .8;
-                transition: all .4s ease;
             }
             .blogs{
                 height: auto;

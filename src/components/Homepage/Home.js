@@ -1,4 +1,6 @@
+import "./Home.css";
 import ReactRotatingText from "react-rotating-text";
+
 function Home() {
     return (
         <div className="header">
