@@ -51,7 +51,7 @@
    .navigation-close{
     position: fixed;
        top: 13%;
-       left: 80%;
+       left: 77%;
        padding: 10px;
        cursor: pointer;
        transition: all.3s ease;
@@ -117,7 +117,7 @@
     height: 50px;
     position: absolute;
     top: 12%;
-    right: 58%;
+    right: 50%;
     opacity: .9;
     z-index: 2;
     cursor: pointer;
@@ -183,13 +183,11 @@ ul li {
     font-size:medium;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-.dropdown-toggle {
+button{
     color: rgb(188, 168, 224);
     background-color: rgb(151, 22, 22);
 }
-
-.dropdown-toggle:hover {
+ button:hover{
    background: #202020;
 }
 
