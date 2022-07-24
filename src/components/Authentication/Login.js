@@ -1,10 +1,11 @@
+import { useContext } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 import * as authService from '../../services/authService.js';
+import { AuthContext } from '../../contexts/AuthContext.js';
 
-export const Login = ({
-    onLogin
-}) => {
+export const Login = () => {
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onLoginHandler = (e) => {
@@ -17,13 +18,16 @@ export const Login = ({
 
         authService.login(username, password)
             .then((authData) => {
-                console.log(authData);
+                login(authData);
+
+                navigate('/');
             })
             .catch(err => {
+                // TODO: show notification
                 console.log(err);
             });
 
-        onLogin(username);
+        login(username);
 
         navigate('/');
     }

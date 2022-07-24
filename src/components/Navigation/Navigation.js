@@ -2,15 +2,16 @@ import "./Navigation.css"
 import "./Navigation.scss";
 import "animate.css";
 import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext.js";
 import * as authService from '../../services/authService.js';
 import { Link, NavLink } from "react-router-dom";
 
 import { Login } from '../Authentication/Login.js';
 import { Register } from '../Authentication/Register.js';
 
-function Navigation({
-    onLogin
-}) {
+function Navigation() {
+    const { user } = useContext(AuthContext);
     const redirect = useNavigate();
 
     const onLoginHandler = (e) => {
@@ -20,8 +21,6 @@ function Navigation({
         let username = formData.get('username');
 
         authService.login(username);
-
-        onLogin(username);
 
         redirect('/');
     }
@@ -50,9 +49,9 @@ function Navigation({
                                 <div className="chevron"></div>
                             </div>
                         </div>
-                        {!authService.isAuthenticated
+                        {user.username
                             ? <ul className="nav navbar-nav navbar-right">
-                                <li><span className="greeting-user">Welcome, {authService.getUser()} ! </span></li>
+                                <li><span className="greeting-user">Welcome, {user.username} ! </span></li>
                                 <li><button>Logout</button></li>
                             </ul>
                             : <ul className="nav navbar-nav navbar-right">
@@ -60,7 +59,8 @@ function Navigation({
                                 <Login onLoginHandler={onLoginHandler} />
                                 <li><span className="greeting-user"> or </span></li>
                                 <Register />
-                            </ul>}
+                            </ul>
+                            }
                     </div>
                 </div>
             </nav>

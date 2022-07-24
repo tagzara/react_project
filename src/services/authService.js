@@ -1,5 +1,7 @@
+const baseUrl = "http://localhost:5000/"
+
 export const login = async (username, password) => {
-    let res = await fetch('http://localhost:5000/users/login', {
+    let res = await fetch(`${baseUrl}users/login`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -12,9 +14,29 @@ export const login = async (username, password) => {
     if (res.ok) {
         return jsonResult;
     } else {
-        throw jsonResult;
+        throw jsonResult.message;
     }
 };
+
+export const register = async (username, email, password) => {
+    let res = await fetch(`${baseUrl}users/register`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({username, email, password})
+    });
+        
+    let jsonResult = await res.json();
+
+    if (res.ok) {
+        return jsonResult;
+    } else {
+        throw jsonResult.message;
+    }
+};
+
+export const logout = () => fetch(`${baseUrl}/users/logout`);
 
 export const getUser = () => {
     let username = localStorage.getItem('username');
