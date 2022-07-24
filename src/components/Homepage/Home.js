@@ -14,7 +14,7 @@ function Home() {
                 <div className="header-content-box">
                     <div className="firstline"><span className="color">World Gaming </span>Community</div>
                     <div className="secondline">
-                    <span className="color">Here we </span>
+                    <span className="color">There we </span>
                         <ReactRotatingText items={['are community.', 'sharing our experience.', 'enjoying together.']} />
                     </div>
                 </div>
