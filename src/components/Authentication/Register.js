@@ -15,7 +15,7 @@ export const Register = () => {
         e.preventDefault();
         function onRegister() {
             if (password !== confirmPassword) {
-                alert('Passords does\'t mutch!' );
+                alert('Passords does\'t mutch!');
             } else {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
@@ -26,14 +26,16 @@ export const Register = () => {
                     })
                     .catch((error) => console.log(error));
                 navigate("/");
-            } 
+            }
         }
         onRegister();
     };
 
     return (
         <li className="dropdown">
-            <button href="/register" className="dropdown-toggle" data-toggle="dropdown">Register <span className="caret"></span></button>
+            <button href="/register" className="dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-lock"></span> Register<span className="caret"></span>
+            </button>
             <ul class="dropdown-menu dropdown-lr animated flipInX" role="menu">
                 <div className="col-lg-12">
                     <div className="text-center">
@@ -57,9 +59,7 @@ export const Register = () => {
                         </div>
                         <div className="form-group">
                             <div className="row">
-                                <div className="col-xs-6 col-xs-offset-3">
-                                    <input type="submit" name="register-submit" id="register-submit" className="form-control btn btn-info" value="Register Now" />
-                                </div>
+                                <input type="submit" name="register-submit" id="register-submit" className="form-control btn-success" value="Register" />
                             </div>
                         </div>
                     </form>

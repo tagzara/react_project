@@ -22,7 +22,9 @@ export const Login = () => {
 
     return (
         <li className="dropdown">
-            <button href="/login" className="dropdown-toggle" data-toggle="dropdown">Log In <span className="caret"></span></button>
+            <button href="/login" className="dropdown-toggle btn btn-default btn-sm" data-toggle="dropdown">
+                <span className="glyphicon glyphicon-log-in"></span> Log In <span className="caret"></span>
+            </button>
             <ul className="dropdown-menu dropdown-lr animated slideInRight" role="menu">
                 <div className="col-lg-12">
                     <div className="text-center">
@@ -47,7 +49,7 @@ export const Login = () => {
                                     <label htmlFor="remember"> Remember Me</label>
                                 </div>
                                 <div className="col-xs-5 pull-right">
-                                    <input type="submit" name="login-submit" id="login-submit" className="form-control btn btn-success" value="Log In" />
+                                    <input type="submit" name="login-submit" id="login-submit" className="form-control btn-success" value="Log In" />
                                 </div>
                             </div>
                         </div>
@@ -61,7 +63,6 @@ export const Login = () => {
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" className="hide" name="token" id="token" value="a465a2791ae0bae853cf4bf485dbe1b6" />
                     </form>
                 </div>
             </ul>

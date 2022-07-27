@@ -61,14 +61,15 @@ function Navigation() {
                         {currentUser
                             ? < ul className="nav navbar-nav navbar-right">
                                 <li><span className="greeting-user">Welcome, {username} ! </span></li>
-                                <li><button onClick={clickLogout}>Logout</button></li>
+                                <li><button type="button" className="btn btn-default btn-sm" onClick={clickLogout}>
+                                    <span className="glyphicon glyphicon-log-out"></span> Log out
+                                </button></li>
                             </ul>
                             : <ul className="nav navbar-nav navbar-right">
                                 <li><span className="greeting-user">Welcome, guest! Please </span></li>
                                 <Login />
                                 <li><span className="greeting-user"> or </span></li>
                                 <Register />
-
                             </ul>
                         }
                     </div>

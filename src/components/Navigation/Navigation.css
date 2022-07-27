@@ -136,7 +136,8 @@
     transition: all .4s ease;
 }
 .greeting-user {
-    color: rgb(235, 219, 219);
+    font-size: large;
+    color: rgb(200, 184, 230);
     float:left
 }
 .cursor{
@@ -184,11 +185,21 @@ ul li {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 button{
+    font-size: large;
     color: rgb(188, 168, 224);
     background-color: rgb(151, 22, 22);
 }
  button:hover{
    background: #202020;
+}
+ .glyphicon-log-out{
+    color: rgb(188, 165, 231);
+}
+
+.btn {
+    font-size: large;
+    color: rgb(188, 165, 231);
+    background-color: rgb(122, 10, 10);
 }
 
 /* mobile fix */
