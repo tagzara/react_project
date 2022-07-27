@@ -1,23 +1,36 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as authService from '../../services/authService.js';
-import { AuthContext } from '../../contexts/AuthContext.js';
+import React, { useState } from "react";
+import { auth, db } from "../../utils/firebase.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { ref, set } from "firebase/database";
 
 export const Register = () => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
 
-    const registerSubmitHandler = (e) => {
+    const handleRegisterSubmit = (e) => {
         e.preventDefault();
+        function onRegister() {
+            if (password !== confirmPassword) {
+                alert('Passords does\'t mutch!' );
+            } else {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        set(ref(db, "users/" + userCredential.user.uid), {
+                            username: username,
+                            email: email,
+                        });
+                    })
+                    .catch((error) => console.log(error));
+                navigate("/");
+            } 
+        }
+        onRegister();
+    };
 
-        let formData = Object.fromEntries(new FormData(e.currentTarget));
-
-        authService.register(formData)
-            .then(authData => {
-                login(authData);
-                navigate('/blog');
-            });
-    }
     return (
         <li className="dropdown">
             <button href="/register" className="dropdown-toggle" data-toggle="dropdown">Register <span className="caret"></span></button>
@@ -25,18 +38,22 @@ export const Register = () => {
                 <div className="col-lg-12">
                     <div className="text-center">
                         <h3 className="animate__animated animate__bounce"><b>Register</b></h3></div>
-                    <form id="ajax-register-form" method="POST" onSubmit={registerSubmitHandler} >
+                    <form id="ajax-register-form" method="POST" onSubmit={handleRegisterSubmit}>
                         <div className="form-group">
-                            <input type="text" name="username" id="username" className="form-control" placeholder="Username" />
+                            <input type="text" name="username" id="username" className="form-control" placeholder="Username"
+                                onChange={(e) => setUsername(e.target.value)} required />
                         </div>
                         <div className="form-group">
-                            <input type="email" name="email" id="email" className="form-control" placeholder="Email Address" />
+                            <input type="email" name="email" id="email" className="form-control" placeholder="Email Address"
+                                onChange={(e) => setEmail(e.target.value)} required />
                         </div>
                         <div className="form-group">
-                            <input type="password" name="password" id="password" className="form-control" placeholder="Password" />
+                            <input type="password" name="password" id="password" className="form-control" placeholder="Password"
+                                onChange={(e) => setPassword(e.target.value)} required />
                         </div>
                         <div className="form-group">
-                            <input type="password" name="confirm-password" id="confirm-password" className="form-control" placeholder="Confirm Password" />
+                            <input type="password" name="confirm-password" id="confirm-password" className="form-control" placeholder="Confirm Password"
+                                onChange={(e) => setConfirmPassword(e.target.value)} required />
                         </div>
                         <div className="form-group">
                             <div className="row">
@@ -45,7 +62,6 @@ export const Register = () => {
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" className="hide" name="token" id="token" value="7c6f19960d63f53fcd05c3e0cbc434c0" />
                     </form>
                 </div>
             </ul>

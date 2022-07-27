@@ -1,36 +1,45 @@
 import "./Navigation.css"
 import "./Navigation.scss";
 import "animate.css";
-import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext.js";
-import * as authService from '../../services/authService.js';
+import React, { useState, useContext, useEffect } from "react";
+import { auth, db } from "../../utils/firebase.js";
+import { signOut } from "firebase/auth";
+import { AuthContext } from "../../utils/AuthProvider.js";
 import { Link, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ref, onValue } from "firebase/database";
 
 import { Login } from '../Authentication/Login.js';
 import { Register } from '../Authentication/Register.js';
 
 function Navigation() {
-    const { user } = useContext(AuthContext);
-    const redirect = useNavigate();
+    const { currentUser } = useContext(AuthContext);
+    const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
-    const onLoginHandler = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (currentUser) {
+            const starCountRef = ref(db, "users/" + currentUser.uid);
+            onValue(starCountRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    let data = snapshot.val();
+                    setUsername(data.username);
+                }
+            });
+        }
+    }, [currentUser]);
 
-        let formData = new FormData(e.currentTarget);
-        let username = formData.get('username');
-
-        authService.login(username);
-
-        redirect('/');
+    const clickLogout = () => {
+        signOut(auth);
+        navigate('/');
     }
 
     return (
         <div className="navigation">
-            <link href="http://cdn.phpoll.com/css/animate.css" rel="stylesheet" />
+
             <nav className="navbar navbar-inverse navbar-fixed-top" id="main-nav" role="navigation">
                 <div className="main-logo">
-                    <img src="/images/main-logo.png" alt="logo"/>
+                    <img src="/images/main-logo.png" alt="logo" />
                 </div>
                 <div className="cursor"></div>
                 <div className="loader">
@@ -49,21 +58,22 @@ function Navigation() {
                                 <div className="chevron"></div>
                             </div>
                         </div>
-                        {user.username
-                            ? <ul className="nav navbar-nav navbar-right">
-                                <li><span className="greeting-user">Welcome, {user.username} ! </span></li>
-                                <li><button>Logout</button></li>
+                        {currentUser
+                            ? < ul className="nav navbar-nav navbar-right">
+                                <li><span className="greeting-user">Welcome, {username} ! </span></li>
+                                <li><button onClick={clickLogout}>Logout</button></li>
                             </ul>
                             : <ul className="nav navbar-nav navbar-right">
                                 <li><span className="greeting-user">Welcome, guest! Please </span></li>
-                                <Login onLoginHandler={onLoginHandler} />
+                                <Login />
                                 <li><span className="greeting-user"> or </span></li>
                                 <Register />
+
                             </ul>
-                            }
+                        }
                     </div>
                 </div>
-            </nav>
+            </nav >
             <div className="navigation-content">
                 <div className="logo">
                     <img src="/images/logo.png" alt="logo" />
@@ -80,7 +90,7 @@ function Navigation() {
                     <NavLink to="/create-post" data-text="POST" className="post-link" >POST</NavLink>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
