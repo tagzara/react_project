@@ -1,3 +1,6 @@
+import { db } from "../utils/firebase.js";
+import { ref, set } from "firebase/database";
+
 const baseUrl = 'http://localhost:5000/';
 
 export const getAll = async () => {
@@ -9,18 +12,16 @@ export const getAll = async () => {
 }
 
 export const create = async (blogData, token) => {
-    let response = await fetch(`${baseUrl}/blog`, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            'X-Authorization': token,
-        },
-        body: JSON.stringify(blogData)
-    });
-
-    let result = await response.json();
-
-    return result;
+    try {
+         set(ref(db, "posts/" + token), {
+            name: blogData.name,
+            genre: blogData.genre,
+            imageUrl: blogData.imageUrl,
+            description: blogData.description
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const getOne = (blogId) => {

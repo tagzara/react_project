@@ -1,15 +1,12 @@
 import "./CreatePost.css";
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../utils/AuthProvider.js";
 import * as blogService from '../../services/blogService.js';
-import { AuthContext } from '../../contexts/AuthContext.js';
-import InputError from "../Shared/InputError/InputError.js";
 
 function CreatePost() {
-   const { user } = useContext(AuthContext);
+   const { currentUser } = useContext(AuthContext);
    const navigate = useNavigate();
-
-   const [errorMessage, setErrorMessage] = useState('');
 
    const onPostCreate = (e) => {
       e.preventDefault();
@@ -25,20 +22,10 @@ function CreatePost() {
          genre,
          imageUrl,
          description,
-      }, user.accessToken)
+      }, currentUser.accessToken)
          .then(result => {
             navigate('/blog');
          })
-   }
-
-   const onDescriptionChangeHandler = (e) => {
-      console.log(e.target.value);
-
-      if (e.target.value < 10) {
-         setErrorMessage('Description too short');
-      } else {
-         setErrorMessage('');
-      }
    }
 
    return (
@@ -57,8 +44,7 @@ function CreatePost() {
                      </select>
                   </div>
                   <input type="text" id="subject" placeholder="image url" className="input-subject" />
-                  <textarea id="body" className="input-textarea" placeholder="description" onBlur={onDescriptionChangeHandler}></textarea>
-                  <InputError>{errorMessage}</InputError>
+                  <textarea id="body" className="input-textarea" placeholder="description"></textarea>
                   <button type="button" id="submit" value="send">Submit</button>
                </form>
             </div>

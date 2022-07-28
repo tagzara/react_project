@@ -4,7 +4,7 @@ import { AuthProvider } from "./utils/AuthProvider.js";
 
 import Navigation from "./components/Navigation/Navigation.js";
 import Home from "./components/Homepage/Home.js";
-import About from "./components/About.js";
+import About from "./components/About/About.js";
 import Portfolio from "./components/Portfolio.js";
 import Blog from "./components/Blog/Blog.js";
 import CreatePost from "./components/CreatePost/CreatePost.js";
