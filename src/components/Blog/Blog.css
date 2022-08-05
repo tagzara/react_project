@@ -1,4 +1,5 @@
 .blog{
+    display: block;
     background: #141414;
     color:whitesmoke;
     width: 100%;
@@ -45,22 +46,38 @@
     bottom: 0;
     background: #c70039;
     color: whitesmoke;
+    font-size: 17px;
+    text-align: center;
+    font-weight: 400;
+    font-family: poppins;
+    padding: 3px;
+    transition: all .4s ease;
+    width: 27%;
+    height: auto;
+}
+.genre{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #c70039;
+    color: whitesmoke;
     font-size: 18px;
     text-align: center;
     font-weight: 400;
     font-family: poppins;
     padding: 3px;
     transition: all .4s ease;
-    width: 25%;
-    height: auto;
+    width: 27%;
+    height: 10%;
 }
+
 .blogs .img img{
     height: 100%;
     width: 100%;
     transition: all .65s ease;
 }
 .blog-text{
-    height: 80%;
+    height: 100%;
     width: 100%;
     text-align: center;
     vertical-align: center;
@@ -77,7 +94,7 @@
     letter-spacing: 1px;
   }
   .blog-text p{
-    font-size: 18px;
+    font-size: 17px;
     opacity: .9;
     font-weight: 400;
     height: 80%;

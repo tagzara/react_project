@@ -1,27 +1,51 @@
 import "./Blog.css";
 import { useEffect, useState } from "react";
-import BlogCard from "./BlogCard/BlogCard.js";
-import * as blogService from '../../services/blogService.js';
-
+import { NavLink } from "react-router-dom"; 
+import { ref, onValue } from "firebase/database";
+import { db } from "../../utils/firebase.js";
 function Blog() {
-   const [blogs, setBlogs] = useState([]);
+
+   const [posts, setPosts] = useState([]);
+
 
    useEffect(() => {
-      blogService.getAll()
-         .then(result => {
-            setBlogs(result);
+      const posts = [];
+      onValue(ref(db, 'posts'), (snapshot) => {
+         snapshot.forEach((post) => {
+            let data = post.val();
+            console.log(data);
+            let formatedDate = new Date(data.date).toLocaleString();
+            data.date = formatedDate;
+            posts.push(data);
+            console.log(posts);
          });
-   },[]);
+         setPosts(posts);
+      });
+   }, []);
 
-    return (
-        <div className="blog">
-               <div className="blog-header"> <span>Blogs</span>
-                  <span className="header-caption"> My Latest <span className="color"> blog posts.</span></span></div>
-               <div className="blog-content">
-                  { blogs.map(x => <BlogCard key={x._id} blog={x} />) }
+
+   return (
+      <div className="blog">
+         <div className="blog-header"> <span>Blogs</span>
+            <span className="header-caption"> Our Latest <span className="color"> blog posts.</span></span></div>
+         <div className="blog-content">
+            {posts.map((value, index) =>
+               <div className="blogs" key={index}>
+                  <NavLink to={`/details/${value.uuid}`}>
+                     <div className="img">
+                        <img src={value.imageUrl} alt="blog-one" />
+                        <div className="blog-date">{value.date}</div>
+                        <div className="genre">{value.genre}</div>
+                     </div>
+                     <div className="blog-text">
+                        <h3>{value.name}</h3>
+                        <p>{value.description}</p>
+                     </div></NavLink>
                </div>
-            </div>
-    );
+            )}
+         </div>
+      </div>
+   );
 }
 
 export default Blog;
