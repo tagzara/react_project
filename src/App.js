@@ -9,6 +9,7 @@ import Portfolio from "./components/Portfolio.js";
 import Blog from "./components/Blog/Blog.js";
 import CreatePost from "./components/CreatePost/CreatePost.js";
 import Footer from "./components/Footer.js";
+import ErrorPage from "./components/404/404.js";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                <Route path="/portfolio" element={<Portfolio />} />
                <Route path="/blog" element={<Blog />} />
                <Route path="/create-post" element={<CreatePost />} />
+               <Route path="/404" element={<ErrorPage />} />
             </Routes>
             <Footer />
          </div>
