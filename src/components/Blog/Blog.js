@@ -13,7 +13,6 @@ function Blog() {
       onValue(ref(db, 'posts'), (snapshot) => {
          snapshot.forEach((post) => {
             let data = post.val();
-            console.log(data);
             let formatedDate = new Date(data.date).toLocaleString();
             data.date = formatedDate;
             posts.push(data);
