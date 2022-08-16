@@ -1,7 +1,7 @@
 .post{
     display: block;
     position: relative;
-    background-image: url(./assets/img/background.jpg);
+    background-image: url(../assets/img/background.jpg);
     background-position-x: center;
     width: 100%;
     right: 3px;

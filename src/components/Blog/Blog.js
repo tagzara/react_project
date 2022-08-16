@@ -16,7 +16,7 @@ function Blog() {
             let formatedDate = new Date(data.date).toLocaleString();
             data.date = formatedDate;
             posts.push(data);
-            console.log(posts);
+            
          });
          setPosts(posts);
       });

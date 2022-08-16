@@ -1,11 +1,11 @@
 import "./CreatePost.css";
 import React, { useState, useContext } from 'react';
 import { uid } from 'uid';
-import { AuthContext } from "../../utils/AuthProvider.js";
+import { AuthContext } from "../../../utils/AuthProvider.js";
 import { useNavigate } from 'react-router-dom';
 import { ref, set } from "firebase/database";
-import { db } from '../../utils/firebase.js';
-import  GameGenres  from "./GameGenres/GameGenres.js";
+import { db } from '../../../utils/firebase.js';
+import  GameGenres  from "../GameGenres/GameGenres.js";
 
 function CreatePost() {
    const { currentUser } = useContext(AuthContext);
@@ -22,7 +22,7 @@ function CreatePost() {
       if (currentUser) {
 
          set(ref(db, `posts/${uuid}`), {
-            author: currentUser.uid,
+            author: currentUser.email,
             name: name,
             genre: genre,
             imageUrl: imageUrl,

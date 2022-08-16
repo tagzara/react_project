@@ -1,0 +1,110 @@
+.post{
+    display: block;
+    position: relative;
+    background-image: url(../assets/img/background.jpg);
+    background-position-x: center;
+    width: 100%;
+    right: 3px;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 3;
+}
+.post a{
+    z-index: 3;
+}
+.post img{
+    margin:10px;
+    height:30px;
+    opacity: .6;
+    transition: all .4s ease;
+}
+.post img:hover{
+    opacity: 1;
+    transform: scale(1.1);
+}
+.post-header{
+    height: auto;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    font-family: raleway;
+    color: whitesmoke;
+    padding:10px;
+    padding-bottom: 30px;
+    padding-top: 60px;
+    font-weight: 900;
+}
+.post-header-caption{
+    padding: 20px;
+    color: whitesmoke;
+    opacity: .9;
+    font-family:raleway;
+    font-size: 28px;
+}
+.post-content{
+    background-color: transparent;
+    width: 90%;
+    margin: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.post-form{
+    height: 550px;
+    padding-right:40px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+.input-line{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.input-name{
+    width: 40%;
+    padding:10px 20px;
+    margin:14px;
+    border-radius: 8px;
+    outline: none;
+    background: #a3172f;
+    border:none;
+    color: whitesmoke;
+    font-family: poppins;
+    font-size: 18px;
+}
+.input-subject{
+    width: 84%;
+    padding:10px 20px;
+    margin:24px;
+    border-radius: 8px;
+    outline: none;
+    background: #a3172f;
+    border:none;
+    color: whitesmoke;
+    font-family: poppins;
+    font-size: 18px;
+}
+.input-textarea{
+    width: 84%;
+    padding:10px 20px;
+    margin:15px;
+    height: 150px;
+    border-radius: 8px;
+    outline: none;
+    background: #a3172f;
+    border:none;
+    color: whitesmoke;
+    font-family: poppins;
+    font-size: 18px;
+}

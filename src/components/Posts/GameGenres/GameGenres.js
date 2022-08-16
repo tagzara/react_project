@@ -1,6 +1,3 @@
-
-import '../CreatePost.css';
-
 function GameGenres({setGenre}) {
   const genres = [
     { label: 'ACT', value: 'Action' },
@@ -14,15 +11,13 @@ function GameGenres({setGenre}) {
     { label: 'OTH', value: 'Other' }
 ];
 
-
-
 let handleGenreChange = (e) => {
     setGenre(e.target.value)
 }
 
   return (
 
-    <select id="genre" placeholder="Genre" className="input-name" onChange={handleGenreChange}> 
+    <select id="genre" className="input-name" onChange={handleGenreChange}> 
       <option value="⬇️ Select a genre ⬇️"> -- Select a genre -- </option>
       {genres.map((genre) => <option key={genre.label} value={genre.value}>{genre.value}</option>)}
     </select>
