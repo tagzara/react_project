@@ -389,8 +389,3 @@ img.zoom-img:hover {
   .button-like:active {
     opacity: .5;
   }
-
-  .trigger-btn {
-	display: inline-block;
-	margin: 100px auto;
-}
