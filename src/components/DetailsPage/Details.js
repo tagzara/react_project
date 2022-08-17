@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ref, onValue, remove } from "firebase/database";
 import { db } from "../../utils/firebase.js";
+import { AuthContext } from "../../utils/AuthProvider.js";
 import './Details.css';
 
 function Details(postId) {
     let params = useParams();
     const navigate = useNavigate();
+    const { currentUser } = useContext(AuthContext);
     const [post, setPost] = useState({});
 
     useEffect(() => {
@@ -15,13 +17,14 @@ function Details(postId) {
         });
     }, [params.postId]);
 
+    const postOwner = currentUser.uid === post.authorId;
     const createdAt = new Date(post.date).toLocaleString();
 
-     function deletePost () {
-       remove(ref(db, 'posts/' + params.postId))
-       .catch((err) => console.log(err));
+    function deletePost() {
+        remove(ref(db, 'posts/' + params.postId))
+            .catch((err) => console.log(err));
 
-       navigate('/blog');
+        navigate('/blog');
     }
 
     return (
@@ -35,13 +38,20 @@ function Details(postId) {
                             </div>
                             <p className="snglp">{post.description}</p>
                         </div>
-                        <div className="functional-buttons">
-                            <ul id="funct-btns-list">
-                                <li><Link to={`/details/${post.uuid}/edit`}><button className="button-edit">Edit</button></Link></li>
-                                <li><button className="button-24" onClick={() => {if(window.confirm('Are you sure to delete this record?')){ deletePost()};}}>Delete</button></li>
-                                <li><button className="button-like" >Like</button></li>
-                            </ul>
-                        </div>
+                        {postOwner
+                            ? <div className="functional-buttons">
+                                <ul id="funct-btns-list">
+                                    <li><Link to={`/details/${post.uuid}/edit`}><button className="button-edit">Edit</button></Link></li>
+                                    <li><button className="button-24" onClick={() => { if (window.confirm('Are you sure to delete this record?')) { deletePost() }; }}>Delete</button></li>
+                                    <li><button className="button-like" >Like</button></li>
+                                </ul>
+                            </div>
+                            : <div className="functional-buttons">
+                                <ul id="funct-btns-list">
+                                    <li><button className="button-like" >Like</button></li>
+                                </ul>
+                            </div>
+                        }
                         <div className="clearfix"> </div>
                         <div className="comment-icons">
                             <ul>

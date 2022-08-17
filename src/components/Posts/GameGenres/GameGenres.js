@@ -4,7 +4,7 @@ function GameGenres({setGenre}) {
     { label: 'ADV', value: 'Adventure' },
     { label: 'STR', value: 'Strategy' },
     { label: 'SHO', value: 'Shooter' },
-    { label: 'SIM', value: 'Simulation' },
+    { label: 'SIM', value: 'Puzzle' },
     { label: 'SPO', value: 'Sport' },
     { label: 'FIG', value: 'Fighting' },
     { label: 'RAC', value: 'Racing' },

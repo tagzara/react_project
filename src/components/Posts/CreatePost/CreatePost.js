@@ -22,11 +22,14 @@ function CreatePost() {
       if (currentUser) {
 
          set(ref(db, `posts/${uuid}`), {
+            authorId: currentUser.uid,
             author: currentUser.email,
             name: name,
             genre: genre,
             imageUrl: imageUrl,
             description: description,
+            likes: [],
+            comments: [],
             date: Date.now(),
             uuid
          })
