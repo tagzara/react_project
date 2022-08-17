@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ref, onValue, remove } from "firebase/database";
+import { ref, onValue, remove, update, increment, push, get } from "firebase/database";
 import { db } from "../../utils/firebase.js";
 import { AuthContext } from "../../utils/AuthProvider.js";
 import './Details.css';
+import Comments from './Comments/Comments.js';
+import DetailsRight from './DetailsPageRight/DetailsRight.js';
 
 function Details(postId) {
     let params = useParams();
@@ -27,6 +29,32 @@ function Details(postId) {
         navigate('/blog');
     }
 
+    async function checkUsersLikes() {
+        const usersLikeRef = ref(db, 'posts/' + params.postId + '/usersLiked');
+        get(usersLikeRef).then(function (snapshot) {
+            const usersLikeObj = snapshot.val();
+            let valuesArr = [];
+            for (const likeId in usersLikeObj) {
+                valuesArr.push(usersLikeObj[likeId]);
+            }
+            console.log(valuesArr);
+            if (valuesArr.includes(currentUser.uid)) {
+                alert('You are already liked this post!');
+            } else {
+                addLike();
+                alert('You successfully liked this post!');
+            }
+        });
+    }
+
+    const addLike = async () => {
+        await update(ref(db, 'posts/' + params.postId), {
+            likes: increment(1)
+        });
+        await push(ref(db, 'posts/' + params.postId + '/usersLiked'), currentUser.uid);
+
+    }
+
     return (
         <div className="blog">
             <div className="container">
@@ -43,12 +71,12 @@ function Details(postId) {
                                 <ul id="funct-btns-list">
                                     <li><Link to={`/details/${post.uuid}/edit`}><button className="button-edit">Edit</button></Link></li>
                                     <li><button className="button-24" onClick={() => { if (window.confirm('Are you sure to delete this record?')) { deletePost() }; }}>Delete</button></li>
-                                    <li><button className="button-like" >Like</button></li>
+                                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
                                 </ul>
                             </div>
                             : <div className="functional-buttons">
                                 <ul id="funct-btns-list">
-                                    <li><button className="button-like" >Like</button></li>
+                                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
                                 </ul>
                             </div>
                         }
@@ -59,116 +87,13 @@ function Details(postId) {
                                 <li><span className="clndr"></span>{createdAt}</li>
                                 <li><span className="admin"></span> <a href="/">By {post.author}</a></li>
                                 <li><span className="cmnts"></span> <a href="/">5 comments</a></li>
-                                <li><a href="/" className="like">15 likes</a></li>
+                                <li><a href="/" className="like">{post.likes} likes</a></li>
                             </ul>
                         </div>
-                        <div className="response">
-                            <h4>Responses</h4>
-                            <div className="media response-info">
-                                <div className="media-left response-text-left">
-                                    <a href="/">
-                                        <img className="media-object" src="/images/icon1.png" alt="icon" />
-                                    </a>
-                                    <h5><a href="/">Admin</a></h5>
-                                </div>
-                                <div className="media-body response-text-right">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    <ul>
-                                        <li>MARCH 21, 2013</li>
-                                        <li><a href="/">Reply</a></li>
-                                    </ul>
-                                    <div className="media response-info">
-                                        <div className="media-left response-text-left">
-                                            <a href="/">
-                                                <img className="media-object" src="/images/icon1.png" alt="icon" />
-                                            </a>
-                                            <h5><a href="/">Admin</a></h5>
-                                        </div>
-                                        <div className="media-body response-text-right">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                                sed do eiusmod tempor incididunt ut labore et.</p>
-                                            <ul>
-                                                <li>MARCH 21, 2014</li>
-                                                <li><a href="/">Reply</a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="clearfix"> </div>
-                                    </div>
-                                </div>
-                                <div className="clearfix"> </div>
-                            </div>
-                            <div className="media response-info">
-                                <div className="media-left response-text-left">
-                                    <a href="/">
-                                        <img className="media-object" src="/images/icon1.png" alt="icon" />
-                                    </a>
-                                    <h5><a href="/">Admin</a></h5>
-                                </div>
-                                <div className="media-body response-text-right">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    <ul>
-                                        <li>MARCH 21, 2013</li>
-                                        <li><a href="/">Reply</a></li>
-                                    </ul>
-                                </div>
-                                <div className="clearfix"> </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div className="col-md-4 single-page-right">
-                    <div className="category blog-ctgry">
-                        <h4>Top Games</h4>
-                        <div className="list-group">
-                            <a href="single.html" className="list-group-item">Cras justo odio</a>
-                            <a href="single.html" className="list-group-item">Dapibus ac facilisis in</a>
-                            <a href="single.html" className="list-group-item">Morbi leo risus</a>
-                            <a href="single.html" className="list-group-item">Porta ac consectetur ac</a>
-                            <a href="single.html" className="list-group-item">Vestibulum at eros</a>
-                            <a href="single.html" className="list-group-item">Cras justo odio</a>
-                        </div>
-                    </div>
-                    <div className="recent-posts">
-                        <h4>Recent posts</h4>
-                        <div className="recent-posts-info">
-                            <div className="posts-left sngl-img">
-                                <a href="single.html"> <img src="/images/gl7.jpg" className="img-responsive zoom-img" alt="postimage" /> </a>
-                            </div>
-                            <div className="posts-right">
-                                <label>March 5, 2020</label>
-                                <h5><a href="single.html">Finibus Bonorum</a></h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing incididunt.</p>
-                                <a href="single.html" className="btn btn-primary hvr-rectangle-in">Read More</a>
-                            </div>
-                            <div className="clearfix"> </div>
-                        </div>
-                        <div className="recent-posts-info">
-                            <div className="posts-left sngl-img">
-                                <a href="single.html"> <img src="/images/gl4.jpg" className="img-responsive zoom-img" alt="postimage" /></a>
-                            </div>
-                            <div className="posts-right">
-                                <label>March 1, 2020</label>
-                                <h5><a href="single.html">Finibus Bonorum</a></h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing incididunt.</p>
-                                <a href="single.html" className="btn btn-primary hvr-rectangle-in">Read More</a>
-                            </div>
-                            <div className="clearfix"> </div>
-                        </div>
-                        <div className="clearfix"> </div>
-                    </div>
-                    <div className="coment-form">
-                        <h4>Leave your comment</h4>
-                        <form>
-                            <input type="text" value="Username " required="" />
-                            <input type="text" value="Subject " required="" />
-                            <textarea type="text" required="">Your Comment...</textarea>
-                            <input type="submit" value="SUBMIT" />
-                        </form>
+                        <Comments />
                     </div>
                 </div>
+                        <DetailsRight />
                 <div className="clearfix"> </div>
             </div>
         </div>

@@ -1,0 +1,27 @@
+.media.response-info {
+    margin-top: 1.5em;
+}
+
+.response-info-mdl {
+    margin: 1em 0px 1em 4em;
+}
+
+.response h4 {
+    font-family: 'Play-Regular';
+    font-size: 1.6em;
+    color: #f43c60;
+    margin-bottom: 0.7em;
+}
+
+.response {
+    margin-top: 40px;
+}
+
+.media-left.response-text-left {
+    width: 11%;
+}
+
+.response-text-right ul li a:hover {
+    color: #f43c60;
+    text-decoration: none;
+}

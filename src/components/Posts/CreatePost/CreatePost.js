@@ -28,7 +28,7 @@ function CreatePost() {
             genre: genre,
             imageUrl: imageUrl,
             description: description,
-            likes: [],
+            likes: 0,
             comments: [],
             date: Date.now(),
             uuid

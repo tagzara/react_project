@@ -24,8 +24,6 @@ function Blog() {
 
    posts.sort((a,b) => (new Date(a.date) > new Date(b.date)) ? -1 : 1);
 
-   console.log(posts);
-
    return (
       <div className="blog">
          <div className="blog-header"> <span>Blogs</span>
