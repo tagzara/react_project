@@ -37,14 +37,14 @@ function Details(postId) {
             for (const likeId in usersLikeObj) {
                 valuesArr.push(usersLikeObj[likeId]);
             }
-            console.log(valuesArr);
+          
             if (valuesArr.includes(currentUser.uid)) {
                 alert('You are already liked this post!');
             } else {
                 addLike();
                 alert('You successfully liked this post!');
             }
-        });
+        }).catch(err => {console.log(err)});
     }
 
     const addLike = async () => {

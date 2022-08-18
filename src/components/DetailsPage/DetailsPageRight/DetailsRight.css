@@ -3,25 +3,11 @@
     margin-top: 6em;
 }
 
-.recent-posts h4, .category h4, .coment-form h4 {
+.recent-posts h4, .coment-form h4 {
     font-family: 'Play-Regular';
     font-size: 1.6em;
     color: #f43c60;
     margin-bottom: 0.7em;
-}
-
-a.list-group-item:hover {
-    background-color: #4765e9;
-    border-color: #4765e9;
-    color: #fff;
-}
-
-a.list-group-item {
-    font-size: 0.99em;
-}
-
-.list-group-item {
-    padding: 8px 11px;
 }
 
 .recent-posts-info {
@@ -30,7 +16,7 @@ a.list-group-item {
 
 .posts-left{
     float: left;
-    margin-right: 20px;
+    margin-right: 10px;
     overflow: hidden;
 }
 
@@ -43,6 +29,10 @@ a.list-group-item {
     font-size: 1em;
     color:#f43c60;
     line-height: 1.6em;
+}
+
+.sngl-img {
+  height: 120px;
 }
 
 .posts-right{
