@@ -1,5 +1,7 @@
 import "./Comments.css";
+
 function Comments() {
+    
     return (
         <div className="response">
             <h4>Responses</h4>

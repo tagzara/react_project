@@ -96,7 +96,6 @@ function Navigation() {
                     <Link to="/" data-text="HOME" className="home-link" >HOME</Link>
                     <NavLink to="/about" data-text="ABOUT" className="about-link" >ABOUT</NavLink>
                     <NavLink to="/blog" data-text="BLOG" className="blog-link" >BLOG</NavLink>
-                    <NavLink to="/forum" data-text="FORUM" className="portfolio-link" >FORUM</NavLink>
                     </div>
                 }
             </div>

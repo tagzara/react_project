@@ -15,10 +15,12 @@ function ErrorPage() {
                                 <div className="nk-gap-2"></div>
                                 <h2 className="h4">You chose the wrong path!</h2>
 
-                                <div className='text-secondary'>Or such a page just doesn't exist... <br /> Would you like to go back to the homepage?</div>
+                                <div className='text-secondary'>Such a page just doesn't exist... <br /> Or you are not a Member yet and don't have a permission... <br /> Would you like to go back to the homepage?</div>
                                 <div className="nk-gap-3"></div>
 
                                 <NavLink to="/" className="nk-link">Return to Homepage</NavLink>
+                                <div className="nk-gap-2"></div>
+                                <div className='text-secondary'>Or go to Register and join to our community!  <br /> </div>
                             </div>
                         </div>
                         <div className="nk-gap-3"></div>
