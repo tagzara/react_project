@@ -10,18 +10,26 @@ function DetailsRight() {
     const { currentUser } = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [comment, setComment] = useState("");
+    const date = Date.now();
     let params = useParams();
     const topRatedArray = [];
 
-    const addComment = async () => {
-        await update(ref(db, 'posts/' + params.postId), {
-            commentsCount: increment(1),
-            commentsObj: {
-                username: username,
-                comment: comment,
-                date: new Date().toLocaleDateString
-            }
-        });
+    const addComment = async (e) => {
+        e.preventDefault()
+        if (currentUser) {
+            alert('You\'re comment was submited!')
+            await update(ref(db, 'posts/' + params.postId), {
+                commentsCount: increment(1)
+            });
+            await push(ref(db, 'posts/' + params.postId + '/commentsArr'), {
+                username,
+                comment,
+                date
+            });
+            setUsername(""); setComment("");
+        } else {
+            alert('You must login to post a comment');
+        }
     }
 
     async function getMostLikedPosts() {
@@ -61,10 +69,10 @@ function DetailsRight() {
             </div>
             <div className="coment-form">
                 <h4>Leave your comment</h4>
-                <form>
+                <form onSubmit={addComment}>
                     <input type="text" required="" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
                     <textarea type="text" required="" placeholder="Your Comment..." value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-                    <input type="submit" value="SUBMIT" onClick={() => { addComment() }} />
+                    <button type="submit">SUBMIT</button>
                 </form>
             </div>
         </div>

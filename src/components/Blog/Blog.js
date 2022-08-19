@@ -1,11 +1,10 @@
 import "./Blog.css";
-import { AuthContext } from "../../utils/AuthProvider.js";
-import { useEffect, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom"; 
 import { ref, onValue } from "firebase/database";
 import { db } from "../../utils/firebase.js";
 function Blog() {
-   const { currentUser } = useContext(AuthContext);
+
    const [posts, setPosts] = useState([]);
 
 
@@ -17,13 +16,13 @@ function Blog() {
             let formatedDate = new Date(data.date).toLocaleString();
             data.date = formatedDate;
             posts.push(data);
-
+            
          });
          setPosts(posts);
       });
    }, []);
 
-   posts.sort((a, b) => (new Date(a.date) > new Date(b.date)) ? -1 : 1);
+   posts.sort((a,b) => (new Date(a.date) > new Date(b.date)) ? -1 : 1);
 
    return (
       <div className="blog">
@@ -32,28 +31,16 @@ function Blog() {
          <div className="blog-content">
             {posts.map((value, index) =>
                <div className="blogs" key={index}>
-                  {currentUser
-                     ? <NavLink to={`/details/${value.uuid}`}>
-                        <div className="img">
-                           <img src={value.imageUrl} alt="blog-one" />
-                           <div className="blog-date">{value.date}</div>
-                           <div className="genre">{value.genre}</div>
-                        </div>
-                        <div className="blog-text">
-                           <h3>{value.name}</h3>
-                           <p>{value.description}</p>
-                        </div></NavLink>
-                     : <NavLink to={`/404`}>
-                        <div className="img">
-                           <img src={value.imageUrl} alt="blog-one" />
-                           <div className="blog-date">{value.date}</div>
-                           <div className="genre">{value.genre}</div>
-                        </div>
-                        <div className="blog-text">
-                           <h3>{value.name}</h3>
-                           <p>{value.description}</p>
-                        </div></NavLink>
-                  }
+                  <NavLink to={`/details/${value.uuid}`}>
+                     <div className="img">
+                        <img src={value.imageUrl} alt="blog-one" />
+                        <div className="blog-date">{value.date}</div>
+                        <div className="genre">{value.genre}</div>
+                     </div>
+                     <div className="blog-text">
+                        <h3>{value.name}</h3>
+                        <p>{value.description}</p>
+                     </div></NavLink>
                </div>
             )}
          </div>

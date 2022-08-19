@@ -86,7 +86,7 @@ function Details(postId) {
                                 <li><span></span><a href="/">{post.name}</a> </li>
                                 <li><span className="clndr"></span>{createdAt}</li>
                                 <li><span className="admin"></span> <a href="/">By {post.author}</a></li>
-                                <li><span className="cmnts"></span> <a href="/">5 comments</a></li>
+                                <li><span className="cmnts"></span> <a href="/">{post.commentsCount ? post.commentsCount : 0} comments</a></li>
                                 <li><a href="/" className="like">{post.likes} likes</a></li>
                             </ul>
                         </div>
