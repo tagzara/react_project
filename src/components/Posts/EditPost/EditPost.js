@@ -1,6 +1,5 @@
 import "./EditPost.css";
-import React, { useState, useContext, useEffect } from 'react';
-import { AuthContext } from "../../../utils/AuthProvider.js";
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ref, onValue, update } from "firebase/database";
 import { db } from '../../../utils/firebase.js';
@@ -8,7 +7,6 @@ import GameGenres from "../GameGenres/GameGenres.js";
 
 function EditPost(postId) {
    let params = useParams();
-   const { currentUser } = useContext(AuthContext);
    const navigate = useNavigate();
    const [name, setName] = useState("");
    const [imageUrl, setImageUrl] = useState("");
@@ -27,10 +25,6 @@ function EditPost(postId) {
    const onPostEdit = (e) => {
       e.preventDefault();
 
-      if (currentUser) {
-
-         console.log(currentUser);
-
          update(ref(db, `posts/` + params.postId), {
             name: name,
             genre: genre,
@@ -39,11 +33,7 @@ function EditPost(postId) {
          })
             .catch((err) => console.log(err));
 
-
          navigate('/blog');
-      } else {
-         alert('You must log in to create a post!');
-      }
    }
 
    return (

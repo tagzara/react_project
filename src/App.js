@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuthState } from "./utils/AuthProvider.js";
+import { AuthProvider } from "./utils/AuthProvider.js";
 
 import Navigation from "./components/Navigation/Navigation.js";
 import Home from "./components/HomePage/Home.js";
@@ -13,8 +13,7 @@ import Footer from "./components/Footer.js";
 import ErrorPage from "./components/404/404.js";
 
 function App() {
-   const { isAuthenticated } = useAuthState();
-   
+
    return (
       <AuthProvider>
          <div id="all">
@@ -23,9 +22,9 @@ function App() {
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
                <Route path="/blog" element={<Blog />} />
-               <Route path="/details/:postId" element={ isAuthenticated ? <Details /> : <ErrorPage />}  />
-               <Route path="/details/:postId/edit" element={ isAuthenticated ? <EditPost /> : <ErrorPage />}  />
-               <Route path="/create-post" element={ isAuthenticated ? <CreatePost /> : <ErrorPage />} />
+               <Route path="/details/:postId" element={<Details />} />
+               <Route path="/details/:postId/edit" element={ <EditPost /> } />
+               <Route path="/create-post" element={<CreatePost />} />
                <Route path="/404" element={<ErrorPage />} />
                <Route path="*" element={<ErrorPage />} />
             </Routes>

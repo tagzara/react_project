@@ -12,9 +12,15 @@ export const Login = () => {
     const onLoginSubmitHandler = (e) => {
         e.preventDefault();
         function onLogin() {
-            signInWithEmailAndPassword(auth, email, password).catch((error) =>
-                console.log(error)
-            );
+            signInWithEmailAndPassword(auth, email, password)
+                .then((response) => {
+                    console.log(response)
+                    sessionStorage.setItem('Auth Token',
+                        response._tokenResponse.refreshToken);
+                })
+                .catch((error) =>
+                    console.log(error)
+                );
             navigate("/");
         }
         onLogin();

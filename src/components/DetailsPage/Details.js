@@ -7,11 +7,18 @@ import './Details.css';
 import Comments from './Comments/Comments.js';
 import DetailsRight from './DetailsPageRight/DetailsRight.js';
 
-function Details(postId) {
+function Details() {
     let params = useParams();
-    const navigate = useNavigate();
+    let authToken = sessionStorage.getItem('Auth Token');
+    let navigate = useNavigate();
     const { currentUser } = useContext(AuthContext);
     const [post, setPost] = useState({});
+
+    useEffect(() => {
+        if (!authToken) {
+            navigate("/404")
+        }
+    }, [authToken, navigate]);
 
     useEffect(() => {
         onValue(ref(db, 'posts/' + params.postId), (snapshot) => {
@@ -19,7 +26,8 @@ function Details(postId) {
         });
     }, [params.postId]);
 
-    const postOwner = currentUser.uid === post.authorId;
+    
+    const isOwner = post.authorId === currentUser?.uid;
     const createdAt = new Date(post.date).toLocaleString();
 
     function deletePost() {
@@ -37,14 +45,14 @@ function Details(postId) {
             for (const likeId in usersLikeObj) {
                 valuesArr.push(usersLikeObj[likeId]);
             }
-          
+
             if (valuesArr.includes(currentUser.uid)) {
                 alert('You are already liked this post!');
             } else {
                 addLike();
                 alert('You successfully liked this post!');
             }
-        }).catch(err => {console.log(err)});
+        }).catch(err => { console.log(err) });
     }
 
     const addLike = async () => {
@@ -53,6 +61,28 @@ function Details(postId) {
         });
         await push(ref(db, 'posts/' + params.postId + '/usersLiked'), currentUser.uid);
 
+    }
+
+    const OwnerView = () => {
+        return (
+            <div className="functional-buttons">
+                <ul id="funct-btns-list">
+                    <li><Link to={`/details/${post.uuid}/edit`}><button className="button-edit">Edit</button></Link></li>
+                    <li><button className="button-24" onClick={() => { if (window.confirm('Are you sure to delete this record?')) { deletePost() }; }}>Delete</button></li>
+                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
+                </ul>
+            </div>
+        )
+    }
+
+    const MemberView = () => {
+        return (
+            <div className="functional-buttons">
+                <ul id="funct-btns-list">
+                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
+                </ul>
+            </div>
+        )
     }
 
     return (
@@ -66,19 +96,14 @@ function Details(postId) {
                             </div>
                             <p className="snglp">{post.description}</p>
                         </div>
-                        {postOwner
-                            ? <div className="functional-buttons">
-                                <ul id="funct-btns-list">
-                                    <li><Link to={`/details/${post.uuid}/edit`}><button className="button-edit">Edit</button></Link></li>
-                                    <li><button className="button-24" onClick={() => { if (window.confirm('Are you sure to delete this record?')) { deletePost() }; }}>Delete</button></li>
-                                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
-                                </ul>
-                            </div>
-                            : <div className="functional-buttons">
-                                <ul id="funct-btns-list">
-                                    <li><button className="button-like" onClick={() => { checkUsersLikes() }}>Like</button></li>
-                                </ul>
-                            </div>
+                        {!currentUser
+                            ? navigate("/404")
+                            : <>
+                                {isOwner
+                                    ? < OwnerView />
+                                    : < MemberView />
+                                }
+                              </>
                         }
                         <div className="clearfix"> </div>
                         <div className="comment-icons">
@@ -93,7 +118,7 @@ function Details(postId) {
                         <Comments />
                     </div>
                 </div>
-                        <DetailsRight />
+                <DetailsRight />
                 <div className="clearfix"> </div>
             </div>
         </div>

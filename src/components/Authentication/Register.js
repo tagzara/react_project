@@ -18,11 +18,13 @@ export const Register = () => {
                 alert('Passords does\'t mutch!');
             } else {
                 createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        set(ref(db, "users/" + userCredential.user.uid), {
+                    .then((response) => {
+                        sessionStorage.setItem('Auth Token',
+                            response._tokenResponse.refreshToken);
+                        set(ref(db, "users/" + response.user.uid), {
                             username: username,
                             email: email,
-                        });
+                        })
                     })
                     .catch((error) => console.log(error));
                 navigate("/");
