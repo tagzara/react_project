@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation/Navigation.js";
 import Home from "./components/HomePage/Home.js";
 import About from "./components/About/About.js";
 import Blog from "./components/Blog/Blog.js";
+import { Forum } from "./components/Forum/Forum.js";
 import Details from "./components/DetailsPage/Details.js";
 import CreatePost from "./components/Posts/CreatePost/CreatePost.js";
 import EditPost from "./components/Posts/EditPost/EditPost.js";
@@ -22,6 +23,7 @@ function App() {
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
                <Route path="/blog" element={<Blog />} />
+               <Route path="/forum" element={<Forum />} />
                <Route path="/details/:postId" element={<Details />} />
                <Route path="/details/:postId/edit" element={ <EditPost /> } />
                <Route path="/create-post" element={<CreatePost />} />
